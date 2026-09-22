@@ -173,7 +173,7 @@ class Text2Video():
             for text in labels_list:
                 with torch.no_grad():
                     # InternVideo2 的文本编码器，把字符串映射到 512 维向量
-                    text_feat.append(self.clip.get_txt_feat(text,))
+                    text_feat.append(self.clip.get_txt_feat(text,))  # self.clip ：InternVideo2 模型本身
             # 堆叠成 (B=1, 512)
             text_feat = torch.stack(text_feat, dim=0).to(self.clip.device)
 
@@ -253,5 +253,5 @@ class Text2Video():
 
 if __name__ == '__main__':
     t2v = Text2Video()
-    video_path = t2v.get_prompt('doing a backflip', 64)
+    video_path = t2v.get_prompt('push up', 64)
     print('done', video_path)

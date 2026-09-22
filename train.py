@@ -36,6 +36,20 @@ def make_dreamer_agent(obs_space, action_spec, cur_config, cfg):
         del cur_config.agent
     return hydra.utils.instantiate(cfg, cfg=cur_config, obs_space=obs_space, act_spec=action_spec)
 
+
+# PILOT-SCRATCH: register anchor reward variants (see pilots/README.md)
+import agent.genrl as _genrl_mod
+from pilots import pilot_anchor_rewards as _pilot_anchors
+for _n in ('anchor_reward', 'entropy_reward', 'delta_anchor_reward'):
+    setattr(_genrl_mod, _n, getattr(_pilot_anchors, _n))
+
+# ANCHOR-SCRATCH: class-level method patches for the anchor-conditioned agent
+# (see experiments/anchor_patch.py). Installed at import time so that
+# snapshot-loaded plain GenRLAgent instances carry the patched methods in
+# this process; instance attrs are attached later by patch_agent in Workspace.
+from experiments.anchor_patch import install as _anchor_install
+_anchor_install()
+
 class Workspace:
     def __init__(self, cfg, savedir=None, workdir=None,):
         self.workdir = Path.cwd() if workdir is None else workdir
@@ -157,6 +171,14 @@ class Workspace:
                 self.agent.instantiate_imag_behavior()
         else:
             self.agent = sample_agent
+
+        # ANCHOR-SCRATCH: snapshot-loaded agents are plain GenRLAgent objects
+        # (the class stored in the pretrained WM snapshot), so the anchor-
+        # conditioned method suite must be injected after loading. Guarded on
+        # the agent=genrl_anchor config group (see experiments/anchor_patch.py).
+        if hasattr(self.cfg.agent, 'anchor'):
+            from experiments.anchor_patch import patch_agent
+            patch_agent(self.agent)
 
         self.eval_env = envs.make(self.task, self.cfg.obs_type, self.cfg.action_repeat, self.cfg.seed, img_size=64, )
         if hasattr(self.eval_env, 'eval_mode'):

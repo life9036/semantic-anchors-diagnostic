@@ -1,0 +1,38 @@
+# @package agent
+_target_: experiments.anchor_agent.AnchorGenRLAgent
+name: genrl_anchor
+cfg: ???
+obs_space: ???
+act_spec: ???
+grad_heads: [decoder]
+reward_norm: {momentum: 1.0, scale: 1.0, eps: 1e-8}
+actor_ent: 0
+additional_report_fns: ['report_text2video']
+
+clip_add_noise: 0.0
+clip_lafite_noise: 0.5
+
+connector: { token_dropout: 0, loss_scale: 1, denoising_ae: True, detached_post: True, temporal_embeds: False, rescale_embeds: True}
+connector_rssm: {ensemble: 1, hidden: 1024, deter: 1024, stoch: 32, discrete: 32,  norm: layer, std_act: softplus, min_std: 0.1, single_obs_posterior: false, learn_initial: True } # act: elu,
+connector_kl: {free: 0.0, forward: True, balance: 0.8, free_avg: False, } # note forward is true by default
+
+# marker that enables the imagination behavior; the actual reward dispatch is
+# overridden in AnchorGenRLAgent.update_imag_behavior (never hits globals()).
+imag_reward_fn: anchor_cond
+imag_reward_norm: {momentum: 1.00, scale: 1.0, eps: 1e-8}
+imag_reward_args: {score_fn: 'max_cosine', sample_for_target: False, align_initial: False, weighted_align: False, align_sequence: True, skip_first_target: True}
+
+# Neighborhood-Coupled Semantic Anchors (pre-registered knobs)
+anchor: {
+  k_train: 16,
+  pure_prob: 0.5,     # 1.0 = mixup-off (pure anchors only); 0.5 = mixup-on
+  diayn: false,       # true = anchor + true DIAYN discriminator (mixup-off)
+  shuffle: false,     # true = shuffled c->anchor control (derangement)
+  beta_mi: 1.0,       # DIAYN reward weight (only active when diayn=true)
+  window: 2,          # reward window [t-w, t+w] cap [1,16]
+  lib_path: null,     # disk cache for the anchor library (set per run)
+  cond_mode: anchor,  # anchor | random | text (C4 baselines; targets stay S_i)
+}
+
+# DIAYN discriminator optimizer (pre-registered; only used when diayn=true)
+diayn_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100, wd: 1e-6}

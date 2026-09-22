@@ -4,5 +4,8 @@ __pycache__/
 __init__.py
 results/*
 *.mp4
+*.gif
 models/*
 tmp/
+exp/
+logs/

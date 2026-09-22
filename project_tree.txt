@@ -1,0 +1,133 @@
+.
+├── LICENSE
+├── README.md
+├── agent
+│   ├── dreamer.py
+│   ├── dreamer.yaml
+│   ├── dreamer_utils.py
+│   ├── genrl.py
+│   ├── genrl.yaml
+│   ├── plan2explore.py
+│   ├── plan2explore.yaml
+│   └── video_utils.py
+├── assets
+│   ├── GenRL_cover.gif
+│   ├── dashboard.png
+│   ├── stickman_run.gif
+│   └── video_samples
+│       ├── a_spider_walking_on_the_floor.mp4
+│       ├── backflip.mp4
+│       ├── dancing.mp4
+│       ├── dead_spider_white.gif
+│       ├── dog_running_seen_from_the_side.mp4
+│       ├── doing_splits.mp4
+│       ├── flex.mp4
+│       ├── guy_walking.gif
+│       ├── headstand.mp4
+│       ├── karate_kick.mp4
+│       ├── lying_down_with_legs_up.mp4
+│       ├── open_microwave.gif
+│       ├── person_standing_up_with_hands_up_seen_from_the_side.mp4
+│       ├── punching.mp4
+│       └── spider_draw.gif
+├── collect_data.py
+├── collect_data.yaml
+├── conf
+│   ├── defaults
+│   │   ├── dreamer_v2.yaml
+│   │   ├── dreamer_v3.yaml
+│   │   └── genrl.yaml
+│   ├── env
+│   │   └── dmc_pixels.yaml
+│   └── train_mode
+│       ├── train_behavior.yaml
+│       └── train_model.yaml
+├── data
+│   └── stickman_example
+│       └── 1000-20240504T040956-d7ee0ea24b3e4863b1ef5e5bf1849924-501.npz
+├── demo
+│   ├── app.py
+│   ├── demo_test.py
+│   ├── t2v.py
+│   └── v2v.py
+├── envs
+│   ├── __init__.py
+│   ├── custom_dmc_tasks
+│   │   ├── __init__.py
+│   │   ├── cheetah.py
+│   │   ├── cheetah.xml
+│   │   ├── jaco.py
+│   │   ├── quadruped.py
+│   │   ├── quadruped.xml
+│   │   ├── stickman.py
+│   │   ├── stickman.xml
+│   │   ├── walker.py
+│   │   └── walker.xml
+│   ├── kitchen_extra.py
+│   └── main.py
+├── models
+│   ├── 1B_ft_k710_ft_k400_ft_mit_f8.pth
+│   ├── InternVideo2-stage2_1b-224p-f4.pt
+│   ├── README.md
+│   ├── configuration.json
+│   └── genrl_stickman_500k_2.pt
+├── notebooks
+│   ├── demo_videoclip.ipynb
+│   ├── text2video.ipynb
+│   ├── video2video.ipynb
+│   ├── visualize_dataset_episodes.ipynb
+│   └── visualize_env.ipynb
+├── process_dataset.py
+├── process_dataset.yaml
+├── project_tree.txt
+├── requirements.txt
+├── results
+│   ├── high_kick.mp4
+│   ├── hit_his_own_head.mp4
+│   ├── jump_backward.mp4
+│   ├── lie_still.mp4
+│   ├── roll_on_the_ground.mp4
+│   ├── run_fast.mp4
+│   ├── sit_then_stand_up.mp4
+│   ├── walk_fast_clean.mp4
+│   ├── walk_on_his_hands.mp4
+│   ├── walk_using_hands.mp4
+│   └── 向前奔跑.mp4
+├── test
+│   ├── pytest.ini
+│   └── test_env.py
+├── third_party
+│   ├── InternVideo
+│   │   ├── Data
+│   │   ├── InternVideo1
+│   │   ├── InternVideo2
+│   │   ├── LICENSE
+│   │   └── README.md
+│   └── relay-policy-learning
+│       ├── CONTRIBUTING.md
+│       ├── LICENSE
+│       ├── NOTICE
+│       ├── README.md
+│       ├── adept_envs
+│       ├── adept_models
+│       └── third_party
+├── tmp
+│   ├── a_black_swan_swims_on_the_pond.mp4
+│   ├── backflip.mp4
+│   ├── dancing.mp4
+│   ├── doing_a_backflip.mp4
+│   ├── flex.mp4
+│   ├── headstand.mp4
+│   └── walk_fast.mp4
+├── tools
+│   ├── __init__.py
+│   ├── genrl_utils.py
+│   ├── logger.py
+│   ├── replay.py
+│   ├── task_scores.py
+│   └── utils.py
+├── train.py
+├── train.yaml
+└── 理解.md
+
+27 directories, 103 files
