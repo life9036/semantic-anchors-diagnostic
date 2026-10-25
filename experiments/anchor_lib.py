@@ -178,8 +178,10 @@ def sample_conditions(lib, B, pure_prob, shuffle=False, device='cuda',
       mix:   edge (a,b) ~ U(E);   alpha ~ U[0,1]
              cond = normalize(alpha*cond_a + (1-alpha)*cond_b)
              target_t = normalize(alpha*S_a[t] + (1-alpha)*S_b[t])
-    shuffle (control): cond = c_i but target = S_perm[i] (pure items only;
-    only valid with cond_mode='anchor').
+    shuffle (control): target = S_perm[i] (pure items only).
+    cond_mode='anchor' + shuffle = shuffled-anchor control (semantic
+    conditions, permuted targets); cond_mode='random' + shuffle = M5
+    permuted-target cell (random codes, permuted targets).
 
     Returns conds [B,d], targets [B,T,d], ids [B] (pure anchor id, -1 for mix).
     """
@@ -189,8 +191,8 @@ def sample_conditions(lib, B, pure_prob, shuffle=False, device='cuda',
     S = lib['S'].to(device)
     K, Tsteps, d = S.shape
     edges = torch.as_tensor(lib['edges'], device=device)  # [E, 2]
-    assert not (shuffle and cond_mode != 'anchor'), \
-        'shuffle control only defined for cond_mode=anchor'
+    assert not (shuffle and cond_mode not in ('anchor', 'random')), \
+        'shuffle control defined for cond_mode in {anchor, random}'
 
     is_pure = torch.rand(B, device=device) < pure_prob
     conds = torch.zeros(B, d, device=device)

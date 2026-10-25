@@ -189,8 +189,9 @@ def patch_agent(agent):
         raise ValueError('DIAYN variant requires pure_prob=1.0 (mixup-off)')
     if shuffle and pure != 1.0:
         raise ValueError('shuffle control requires pure_prob=1.0 (mixup-off)')
-    if shuffle and cmode != 'anchor':
-        raise ValueError('shuffle control only defined for cond_mode=anchor')
+    if shuffle and cmode not in ('anchor', 'random'):
+        raise ValueError('shuffle control defined for cond_mode in '
+                         '{anchor, random} (M5 permuted-target cell: random)')
     if getattr(agent.cfg, 'imag_reward_fn', None) is not None:
         agent.instantiate_imag_behavior()
     return agent
