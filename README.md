@@ -1,3 +1,37 @@
+# Semantic Anchors or Random Codes? — Experiment Code
+
+Code for the paper **"Semantic Anchors or Random Codes? A Two-Domain Diagnostic of Text-Conditioned Behavior Pretraining"** (submitted for review).
+
+## What this is
+
+A fork of the GenRL codebase, extended with the anchor-conditioning experiments and the prespecified diagnostic protocol reported in the paper:
+
+- `experiments/anchor_lib.py`, `experiments/anchor_patch.py` — semantic-anchor construction and method injection
+- `experiments/eval_anchors_v2.py` — evaluation (hard-coded reset seeds; deterministic re-evaluation)
+- `experiments/run_*.sh` — Walker/Cheetah main matrix, C4 representation-isolation, and M5 permuted-target runs
+- `experiments/aggregate_*.py` — per-cohort aggregation (paper Tables I–III)
+
+## Versions
+
+| Tag | Date | Contents |
+|---|---|---|
+| `anchors-v2` | 2026-10-03 | Complete paper state: adds the M5 permuted-target control (`run_permuted.sh`, `aggregate_permuted.py`, advisor-R1 follow-up) |
+| `anchors-v1` | 2026-09-22 | Frozen main-matrix state (Walker matrix, Cheetah B5/C4) |
+
+Reproducing the paper: check out `anchors-v2` (branch `exp/anchors`). `master` retains the upstream demo state.
+
+## Data
+
+Per-run result JSONs, aggregation outputs, and the SHA-256 manifest (`RELEASE_MANIFEST.json`) are released separately — URL/DOI to be added at publication.
+
+## License
+
+MIT (see LICENSE).
+
+---
+
+*Original upstream README follows.*
+
 # GenRL: Multimodal-foundation world models for generalization in embodied agents
 
 <p align="center">
